@@ -1,5 +1,4 @@
 class Pixel{
-  
   PVector pos;
   color col;
   
@@ -7,6 +6,4 @@ class Pixel{
     this.pos = p;
     this.col = c;
   }
-  
-  
 }
