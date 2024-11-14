@@ -1,5 +1,16 @@
+import controlP5.*;
+
+ControlP5 cp5;
+
+ColorPicker cp;
+int s;
 void setup() {
     selectInput("Select a file to process:", "fileSelected");
+    p5 = new ControlP5(this);
+    cp = cp5.addColorPicker("picker")
+          .setPosition(60, height-60)
+          .setColorValue(color(255, 0, 0, 255))
+          ;
     size(500,500);
 }
 
