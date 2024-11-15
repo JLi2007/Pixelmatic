@@ -30,6 +30,10 @@ public void Blue_Change(GSlider source, GEvent event) { //_CODE_:Blue:859104:
 b = Blue.getValueI();
 } //_CODE_:Blue:859104:
 
+public void BrushChange(GSlider source, GEvent event) { //_CODE_:Brush_Size:736456:
+  brushsize = Brush_Size.getValueI();
+} //_CODE_:Brush_Size:736456:
+
 
 
 // Create all the GUI controls. 
@@ -43,7 +47,7 @@ public void createGUI(){
   window1.noLoop();
   window1.setActionOnClose(G4P.KEEP_OPEN);
   window1.addDrawHandler(this, "win_draw1");
-  Red = new GSlider(window1, 15, 19, 100, 40, 10.0);
+  Red = new GSlider(window1, 14, 35, 100, 40, 10.0);
   Red.setShowValue(true);
   Red.setLimits(0, 0, 255);
   Red.setNbrTicks(255);
@@ -59,13 +63,36 @@ public void createGUI(){
   Green.setLocalColorScheme(GCScheme.GREEN_SCHEME);
   Green.setOpaque(false);
   Green.addEventHandler(this, "Green_Change");
-  Blue = new GSlider(window1, 18, 168, 100, 40, 10.0);
+  Blue = new GSlider(window1, 16, 162, 100, 40, 10.0);
   Blue.setShowValue(true);
   Blue.setLimits(0, 0, 255);
   Blue.setNbrTicks(255);
   Blue.setNumberFormat(G4P.INTEGER, 0);
   Blue.setOpaque(false);
   Blue.addEventHandler(this, "Blue_Change");
+  label1 = new GLabel(window1, 21, 13, 80, 20);
+  label1.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  label1.setText("Red");
+  label1.setOpaque(false);
+  label2 = new GLabel(window1, 24, 76, 80, 20);
+  label2.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  label2.setText("Green");
+  label2.setOpaque(false);
+  label3 = new GLabel(window1, 22, 139, 80, 20);
+  label3.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  label3.setText("Blue");
+  label3.setOpaque(false);
+  label4 = new GLabel(window1, 178, 15, 80, 20);
+  label4.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  label4.setText("Brush SIze");
+  label4.setOpaque(false);
+  Brush_Size = new GSlider(window1, 178, 39, 99, 36, 10.0);
+  Brush_Size.setShowValue(true);
+  Brush_Size.setLimits(1, 0, 20);
+  Brush_Size.setNbrTicks(20);
+  Brush_Size.setNumberFormat(G4P.INTEGER, 0);
+  Brush_Size.setOpaque(false);
+  Brush_Size.addEventHandler(this, "BrushChange");
   window1.loop();
 }
 
@@ -75,3 +102,8 @@ GWindow window1;
 GSlider Red; 
 GSlider Green; 
 GSlider Blue; 
+GLabel label1; 
+GLabel label2; 
+GLabel label3; 
+GLabel label4; 
+GSlider Brush_Size; 
