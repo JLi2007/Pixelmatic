@@ -1,9 +1,9 @@
 class Pixel{
   PVector pos;
-  color col;
+  color colour;
   
   Pixel(PVector p, color c){
     this.pos = p;
-    this.col = c;
+    this.colour = c;
   }
 }
