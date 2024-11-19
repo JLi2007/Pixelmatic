@@ -33,9 +33,9 @@ void changeHue(int degrees){
         for (int x = 0; x < width; x++) {
             // Get the R,G,B values from image
             float r,g,b;
-            r = red(Pix[x][y].colour);
-            g = green(Pix[x][y].colour);
-            b = blue(Pix[x][y].colour);
+            r = red(originalPix[x][y].colour);
+            g = green(originalPix[x][y].colour);
+            b = blue(originalPix[x][y].colour);
 
             int[] rgb = hueWheel.applyFilter(r,g,b);
             Pix[x][y].colour = color(rgb[0],rgb[1],rgb[2]);
@@ -45,18 +45,22 @@ void changeHue(int degrees){
     updatePixels();
 }
 
-void changeSaturation(int degrees){
+void changeSaturation(int strength){
+    satWheel = new RGBRotate();
     loadPixels();
+    satWheel.setSaturationRotation(strength);
 
     for (int y = 0; y < height; y++) { 
         for (int x = 0; x < width; x++) {
             // Get the R,G,B values from image
             float r,g,b;
-            r = red(originalPix[x][y].colour);
-            g = green(originalPix[x][y].colour);
-            b = blue(originalPix[x][y].colour);
-            
-            Pix[x][y].colour = color(bounds(r+degrees), bounds(g+degrees), bounds(b+degrees));
+            r = red(Pix[x][y].colour);
+            g = green(Pix[x][y].colour);
+            b = blue(Pix[x][y].colour);
+
+            int[] rgb = satWheel.applyFilter(r,g,b);
+            Pix[x][y].colour = color(rgb[0],rgb[1],rgb[2]);
+
         } 
     }
     updatePixels();

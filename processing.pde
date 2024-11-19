@@ -8,7 +8,7 @@ int r,g,b;
 color paint;
 int brushSize = 1;
 int brightnessStrength;
-RGBRotate hueWheel;
+RGBRotate hueWheel, satWheel;
 
 void setup() {
     selectInput("Select a file to process:", "fileSelected");
