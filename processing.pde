@@ -15,6 +15,8 @@ void setup() {
     size(800,800);
     createGUI();
     colorMode(RGB, 255,255,255);
+    hueWheel = new RGBRotate();
+    satWheel = new RGBRotate();
 }
 
 void fileSelected(File selection) {

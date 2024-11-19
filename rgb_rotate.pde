@@ -26,22 +26,22 @@ class RGBRotate{
         valueMatrix[2][2] = cosA + 1.0 / 3.0 * (1.0 - cosA);
     }
 
-    void setSaturationRotation(int scale){
+    void setSaturationRotation(float scale){
         float luminanceR = 0.2126f; 
         float luminanceG = 0.7152f; 
         float luminanceB = 0.0722f;
 
-        valueMatrix[0][0] = luminanceR + (1 - luminanceR) * scale;
-        valueMatrix[0][1] = luminanceG * (1 - scale);
-        valueMatrix[0][2] = luminanceB * (1 - scale);
+        valueMatrix[0][0] = luminanceR + (1.0 - luminanceR) * scale;
+        valueMatrix[0][1] = luminanceG * (1.0 - scale);
+        valueMatrix[0][2] = luminanceB * (1.0 - scale);
 
-        valueMatrix[1][0] = luminanceR * (1 - scale);
-        valueMatrix[1][1] = luminanceG + (1 - luminanceG) * scale;
-        valueMatrix[1][2] = luminanceB * (1 - scale);
+        valueMatrix[1][0] = luminanceR * (1.0 - scale);
+        valueMatrix[1][1] = luminanceG + (1.0 - luminanceG) * scale;
+        valueMatrix[1][2] = luminanceB * (1.0 - scale);
 
-        valueMatrix[2][0] = luminanceR * (1 - scale);
-        valueMatrix[2][1] = luminanceG * (1 - scale);
-        valueMatrix[2][2] = luminanceB + (1 - luminanceB) * scale;
+        valueMatrix[2][0] = luminanceR * (1.0 - scale);
+        valueMatrix[2][1] = luminanceG * (1.0 - scale);
+        valueMatrix[2][2] = luminanceB + (1.0 - luminanceB) * scale;
     }
 
     int[] applyFilter(float r, float g, float b){
