@@ -157,9 +157,9 @@ public void createGUI(){
   imgurWindow.addDrawHandler(this, "win_draw2");
 
   Cap = new GButton(toolbarWindow, 250, 100, 80, 30);
-  Cap.setText("Take_Photo");
+  Cap.setText("Take Photo");
   Cap.setLocalColorScheme(GCScheme.RED_SCHEME);
-  Cap.addEventHandler(this, "Cap");
+  Cap.addEventHandler(this, "Take_Photo");
 
   // COLOR GUI START
   Red = new GSlider(toolbarWindow, 25, 25, 100, 40, 10.0);
