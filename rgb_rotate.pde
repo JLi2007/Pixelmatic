@@ -30,7 +30,7 @@ class RGBRotate{
         float luminanceR = 0.2126f; 
         float luminanceG = 0.7152f; 
         float luminanceB = 0.0722f;
-
+        
         valueMatrix[0][0] = luminanceR + (1.0 - luminanceR) * scale;
         valueMatrix[0][1] = luminanceG * (1.0 - scale);
         valueMatrix[0][2] = luminanceB * (1.0 - scale);
