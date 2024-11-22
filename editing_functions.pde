@@ -83,6 +83,8 @@ void resetToOriginal() {
     surface.setSize(800,800);
     pixelsDrawn = false;
     cropped = false;     
+    imgx = 0;
+    imgy = 0;
     updatePixels();
 }
 
