@@ -10,9 +10,6 @@ void shareFile(){
     String endpoint = "https://api.imgur.com/3/image";
     // imgur clientID API key - normally shouldn't be exposed but its ok for this project
     String clientID = "5a40d6e685c2c70";
-
-    // another secret key...
-    // String clientSecret = "75809ec684586c537c81af5dd02f23288c5f51b0";
     
     try{
         // load image into a byte array
@@ -24,8 +21,15 @@ void shareFile(){
         post.addHeader("Authorization", "Client-ID " + clientID);
         // add the image with a title and description to the imgur post request
         post.addData("image", encodedImage);
-        post.addData("title", postTitle);
-        post.addData("description", postDescription);
+
+        if(postTitle != null){
+            post.addData("title", postTitle);
+        }else{
+            post.addData("title", "Pixelmatic Result Image");
+        }
+        if(postDescription != null){
+            post.addData("description", postDescription);
+        }
 
         // send the request
         post.send();
@@ -40,4 +44,9 @@ void shareFile(){
     catch(NullPointerException e){
         println("make sure you save an image first!");
     }
+}
+
+// opens the link in search app
+void clickLink(String link){
+    link(link);
 }

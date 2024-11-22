@@ -80,48 +80,42 @@ void resetToOriginal() {
     satWheel.setSaturationRotation(0.9);
     
     loadPixels();
-    for (int y = 0; y < height; y++) { 
-        for (int x = 0; x < width; x++) {
-            // Get the R,G,B values from image
-            float r,g,b;
-            r = red(originalPix[x][y].colour);
-            g = green(originalPix[x][y].colour);
-            b = blue(originalPix[x][y].colour);
-            Pix[x][y].colour = color(r,g,b);
-        } 
-    }
+    surface.setSize(800,800);
+    pixelsDrawn = false;
+    cropped = false;     
     updatePixels();
 }
 
-void checkifinbox(PVector x, PVector y) {
+void checkIfInBox(PVector x, PVector y) {
     for (int i = 0; i < width; i++) {
         for (int j = 0; j < height; j++) {
-            if (x.y < Pix[i][j].pos.y & y.y > Pix[i][j].pos.y & x.x < Pix[i][j].pos.x & y.x > Pix[i][j].pos.x) {
+            if (x.y < Pix[i][j].pos.y && y.y > Pix[i][j].pos.y && x.x < Pix[i][j].pos.x && y.x > Pix[i][j].pos.x) {
                 Pix[i][j].colour = color(red(Pix[i][j].colour) / 2, green(Pix[i][j].colour) / 2, blue(Pix[i][j].colour) / 2);
             } 
         }
     }
 }
 
-void crop(PVector x, PVector y) {
-    loadPixels();
-    if(x.x < y.x & x.y < y.y) {
-        
-        width1 = int(y.x - x.x);
-        height1 = int(y.y - x.y);
-        println(width1, height1);
-        
-        surface.setSize(width1, height1);
-        
-        imgx -= x.x;
-        imgy -= x.y;
-        
-        
-        
-        pixelsDrawn = false;    
-        cropped = true;
-        
-        updatePixels();
-}}
+void cropImage(PVector x, PVector y) {
+    try{
+        loadPixels();
+        if(x.x < y.x & x.y < y.y) {  
+            newWidth = int(y.x - x.x);
+            newHeight = int(y.y - x.y);
+            
+            surface.setSize(newWidth, newHeight);
+            
+            imgx -= x.x;
+            imgy -= x.y;
+                
+            pixelsDrawn = false;    
+            cropped = true;
+            
+            updatePixels();
+        }
+    }catch(NullPointerException e){
+        println("You need make bounds with mouse first");
+    }
+}
     
     
