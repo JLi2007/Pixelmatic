@@ -30,14 +30,7 @@ void setup() {
     hueWheel = new RGBRotate();
     satWheel = new RGBRotate();
 
-    String[] cameras = Capture.list();
-  
-    if (cameras.length == 0) {
-        println("There are no cameras available for capture.");
-        exit();
-    } else {
-        cam = new Capture(this, cameras[0]);  
-    }      
+       
 }
 
 void fileSelected(File selection) {
@@ -61,13 +54,15 @@ void draw() {
     if(showCameraPage == true){
         createGUI();
         showCameraPage = false;
-        // String[] cameras = Capture.list();
+     
+      String[] cameras = Capture.list();
   
-        // if (cameras.length == 0) {
-        //     println("There are no cameras available for capture.");
-        //     exit();
-        // } else {
-        //     cam = new Capture(this, cameras[0]);
+    if (cameras.length == 0) {
+        println("There are no cameras available for capture.");
+        exit();
+    } else {
+        cam = new Capture(this, cameras[0]);  
+    }  
             cam.start();
             
             if (cam.available()) {
