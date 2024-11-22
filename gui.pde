@@ -165,7 +165,7 @@ public void createGUI(){
   imgurWindow.noLoop();
   imgurWindow.setActionOnClose(G4P.CLOSE_WINDOW);
   imgurWindow.addDrawHandler(this, "win_draw2");
-  if(showCameraPage == true){
+  if(showFilePage != true){
   Cap = new GButton(toolbarWindow, 300, 275, 80, 30);
   Cap.setText("Take Photo");
   Cap.setLocalColorScheme(GCScheme.RED_SCHEME);

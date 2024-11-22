@@ -52,9 +52,7 @@ void draw() {
         selectInput("Select a file to process:", "fileSelected");
     }
     if(showCameraPage == true){//Create toolbar GUI and make the main window reflect whats going on on the camera when "camera" button is selected
-        createGUI();
-        showCameraPage = false;
-     
+        
       String[] cameras = Capture.list();
   
     if (cameras.length == 0) {
@@ -74,6 +72,9 @@ void draw() {
                     imageSelected = true;   
                 }
             }}
+        createGUI();
+        showCameraPage = false;
+     
     }
     
 
