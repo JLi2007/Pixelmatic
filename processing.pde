@@ -59,11 +59,12 @@ void draw() {
   
     if (cameras.length == 0) {
         println("There are no cameras available for capture.");
-        exit();
-    } else {
-        cam = new Capture(this, cameras[0]);  
-    }  
-            cam.start();
+        showFilePage = true;
+  } else {
+        cam = new Capture(this, cameras[0]);
+                    cam.start();
+
+    
             
             if (cam.available()) {
                 if(takePhoto == true){
@@ -72,7 +73,7 @@ void draw() {
                     takePhoto = false;
                     imageSelected = true;   
                 }
-            }
+            }}
     }
     
 
