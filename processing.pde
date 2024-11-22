@@ -25,7 +25,7 @@ void setup() {
     // load the logo image
     pixelmaticLogo = loadImage("pixelmatic.png");
     pixelmaticLogo.resize(400,400);
-    createGUI_Home();
+    createGUI_Home();//Create home page GUI
     colorMode(RGB, 255,255,255);
     hueWheel = new RGBRotate();
     satWheel = new RGBRotate();
@@ -53,12 +53,12 @@ void fileSelected(File selection) {
 }
 
 void draw() {
-    if(showFilePage==true){
+    if(showFilePage==true){//Create toolbar GUI and the file select popup when the File button is selected on the home page
         createGUI();
         showFilePage = false;
         selectInput("Select a file to process:", "fileSelected");
     }
-    if(showCameraPage == true){
+    if(showCameraPage == true){//Create toolbar GUI and make the main window reflect whats going on on the camera when "camera" button is selected
         createGUI();
         showCameraPage = false;
         // String[] cameras = Capture.list();

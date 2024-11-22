@@ -165,12 +165,12 @@ public void createGUI(){
   imgurWindow.noLoop();
   imgurWindow.setActionOnClose(G4P.CLOSE_WINDOW);
   imgurWindow.addDrawHandler(this, "win_draw2");
-
-  Cap = new GButton(toolbarWindow, 250, 300, 80, 30);
+  if(showCameraPage == true){
+  Cap = new GButton(toolbarWindow, 300, 275, 80, 30);
   Cap.setText("Take Photo");
   Cap.setLocalColorScheme(GCScheme.RED_SCHEME);
   Cap.addEventHandler(this, "Take_Photo");
-
+  }
   // COLOR GUI START
   Red = new GSlider(toolbarWindow, 25, 25, 100, 40, 10.0);
   Red.setShowValue(true);
