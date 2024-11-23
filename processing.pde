@@ -3,8 +3,7 @@ import http.requests.*;
 import processing.video.*;
 
 PImage img, pixelmaticLogo;
-Pixel[][] Pix;
-Pixel[][] originalPix;
+Pixel[][] imagePix, originalPix;
 JSONObject response;
 Capture cam;
 boolean imageSelected;
@@ -13,6 +12,7 @@ boolean cropped = false;
 boolean showFilePage = false;
 boolean showCameraPage = false;
 boolean takePhoto = false;
+boolean cameraInitialized = false;
 int brushSize = 1;
 int r,g,b,brightnessStrength, newWidth, newHeight, mouseVal;
 float imgx = 0, imgy = 0;
@@ -46,41 +46,52 @@ void fileSelected(File selection) {
 }
 
 void draw() {
-    if(showFilePage==true){//Create toolbar GUI and the file select popup when the File button is selected on the home page
+    if(showFilePage){//Create toolbar GUI and the file select popup when the File button is selected on the home page
         createGUI();
         showFilePage = false;
         selectInput("Select a file to process:", "fileSelected");
     }
-    if(showCameraPage == true){//Create toolbar GUI and make the main window reflect whats going on on the camera when "camera" button is selected
+    if(showCameraPage){//Create toolbar GUI and make the main window reflect whats going on on the camera when "camera" button is selected
         
-      String[] cameras = Capture.list();
-  
-    if (cameras.length == 0) {
-        println("There are no cameras available for capture.");
-        showFilePage = true;
-  } else {
-        cam = new Capture(this, cameras[0]);
-                    cam.start();
+        // initialize the camera
+        if(cameraInitialized == false){
 
-    
-            
-            if (cam.available()) {
-                if(takePhoto == true){
-                    cam.read();
-                    img = cam;
-                    takePhoto = false;
-                    imageSelected = true;   
-                }
-            }}
-        createGUI();
-        showCameraPage = false;
-     
+            // list the available cameras on the user's device
+            String[] cameras = Capture.list();
+
+            if (cameras.length == 0) {
+                println("There are no cameras available for capture.");
+                showFilePage = true;
+            }
+
+            cam = new Capture(this, cameras[0]);
+            cam.start();
+
+            println("Camera started!");
+
+            cameraInitialized = true;
+            createGUI();
+        }
+
+        if(imageSelected == false && cam.available()) {
+            cam.read();
+            image(cam, 0, 0);
+            surface.setSize(cam.width, cam.height);
+            if(takePhoto){
+                img = cam.get();
+                takePhoto = false;
+                imageSelected = true; 
+                showCameraPage = false; 
+                cam.stop(); 
+            }
+        }
     }
-    
 
     if (imageSelected) {
         if (pixelsDrawn == false && cropped == false) {
-            img = loadImage(filePath);
+            if(img==null){
+                img = loadImage(filePath);
+            }
             // resize the image proportionally if it's small
             if (img.width < 200 && img.height < 200) {
                 // Triple both dimensions of the image
@@ -102,13 +113,14 @@ void draw() {
             surface.setSize(img.width, img.height);
 
             image(img,0,0);
-            Pix = new Pixel[width][height]; 
-            originalPix = new Pixel[width][height];  
+            imagePix = new Pixel[width][height]; 
+            originalPix = new Pixel[width][height];
+
             for (int y = 0; y < height; y++) {  
                 for (int x = 0; x < width; x++) {
                     PVector pos = new PVector(x, y);
                     // make a Pix 2d array for the changing color values and originalPix 2d array to store the original color values
-                    Pix[x][y] = new Pixel(pos, get(x, y));  
+                    imagePix[x][y] = new Pixel(pos, get(x, y));  
                     originalPix[x][y] = new Pixel(pos, get(x,y));  
                 } 
             }
@@ -119,13 +131,13 @@ void draw() {
             // resize the image proportionally
             image(img,imgx,imgy);
             
-            Pix = new Pixel[width][height]; 
+            imagePix = new Pixel[width][height]; 
             originalPix = new Pixel[width][height];  
             for (int y = 0; y < height; y++) {  
                 for (int x = 0; x < width; x++) {
                     PVector pos = new PVector(x, y);
                     // make Pix for changing color values and originalPix to store the original color values of the image   
-                    Pix[x][y] = new Pixel(pos, get(x, y));  
+                    imagePix[x][y] = new Pixel(pos, get(x, y));  
                     originalPix[x][y] = new Pixel(pos, get(x,y));  
                 } 
             }
@@ -136,7 +148,7 @@ void draw() {
             loadPixels();
             for (int y = 0; y < height; y++) { 
                 for (int x = 0; x < width; x++) {
-                    pixels[y * width + x] = Pix[x][y].colour;
+                    pixels[y * width + x] = imagePix[x][y].colour;
                 } 
             }
             updatePixels();

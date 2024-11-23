@@ -59,6 +59,14 @@ public void Take_Photo(GButton source, GEvent event) {
   takePhoto = true;
 } 
 
+public void Reset_Photo(GButton source, GEvent event){
+  cameraInitialized = false;
+  imageSelected = false; 
+  showCameraPage = true; 
+  pixelsDrawn = false; 
+  img = null; 
+}
+
 public void Red_Change(GSlider source, GEvent event) { //_CODE_:Red:215448:
   r = Red.getValueI();
 } //_CODE_:Red:215448:
@@ -83,15 +91,15 @@ public void Change_Hue(GKnob source, GEvent event) { //_CODE_:Huee:883956:
   changeHue(Hue.getValueI());
 } //_CODE_:Huee:883956:
 
-public void Change_Saturation(GSlider source, GEvent event) { //_CODE_:Huee:883956:
-  changeSaturation(Saturation.getValueF());
-} //_CODE_:Huee:883956:
+// BROKEN FEATURE (SATURATION)
+// public void Change_Saturation(GSlider source, GEvent event) { //_CODE_:Huee:883956:
+//   changeSaturation(Saturation.getValueF());
+// } //_CODE_:Huee:883956:
 
 public void Reset_image(GButton source, GEvent event) { //_CODE_:button1:863431:
   resetToOriginal();
   Bright.setLimits(0, -100, 100);
   Hue.setLimits(0.0, -180.0, 180.0);
-  Saturation.setLimits(1.0, 0.9, 1.1);
 } //_CODE_:button1:863431:
 
 public void Download_image(GButton source, GEvent event) { //_CODE_:button1:863431:
@@ -165,13 +173,18 @@ public void createGUI(){
   imgurWindow.noLoop();
   imgurWindow.setActionOnClose(G4P.CLOSE_WINDOW);
   imgurWindow.addDrawHandler(this, "win_draw2");
-  if(showFilePage != true){
-  Cap = new GButton(toolbarWindow, 300, 275, 80, 30);
-  Cap.setText("Take Photo");
-  Cap.setLocalColorScheme(GCScheme.RED_SCHEME);
-  Cap.addEventHandler(this, "Take_Photo");
+  if(showCameraPage){
+    Cap = new GButton(toolbarWindow, 300, 275, 80, 30);
+    Cap.setText("Take Photo");
+    Cap.setLocalColorScheme(GCScheme.RED_SCHEME);
+    Cap.addEventHandler(this, "Take_Photo");
+    Retake = new GButton(toolbarWindow, 300, 200, 80, 30);
+    Retake.setText("Retake Photo");
+    Retake.setLocalColorScheme(GCScheme.GOLD_SCHEME);
+    Retake.addEventHandler(this, "Reset_Photo");
   }
-  // COLOR GUI START
+
+  // color row
   Red = new GSlider(toolbarWindow, 25, 25, 100, 40, 10.0);
   Red.setShowValue(true);
   Red.setLimits(0, 0, 255);
@@ -210,8 +223,8 @@ public void createGUI(){
   blue_label.setText("Blue");
   blue_label.setOpaque(false);
   blue_label.setLocalColorScheme(GCScheme.BLUE_SCHEME);
-  // COLOR GUI END
 
+  // brush size / crop / dropdown row
   Brush_Size = new GSlider(toolbarWindow, 25, 125, 100, 40, 10.0);
   Brush_Size.setShowValue(true);
   Brush_Size.setLimits(1, 1, 20);
@@ -219,6 +232,10 @@ public void createGUI(){
   Brush_Size.setNumberFormat(G4P.INTEGER, 0);
   Brush_Size.setOpaque(false);
   Brush_Size.addEventHandler(this, "BrushChange");
+  brushSize_label = new GLabel(toolbarWindow, 50, 150, 80, 20);
+  brushSize_label.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  brushSize_label.setText("Brush Size");
+  brushSize_label.setOpaque(false);
   mouse_dropdown = new GDropList(toolbarWindow, 250, 125, 90, 60, 2, 10);
   mouse_dropdown.setItems(loadStrings("list_mouse_dropdown"), 0);
   mouse_dropdown.addEventHandler(this, "Mouse_function_change");
@@ -247,15 +264,6 @@ public void createGUI(){
   Hue.setLocalColorScheme(GCScheme.PURPLE_SCHEME);
   Hue.setOpaque(false);
   Hue.addEventHandler(this, "Change_Hue");
-  Saturation = new GSlider(toolbarWindow, 275, 200, 100, 40, 10.0);
-  Saturation.setLimits(1.0, 0.9, 1.1);
-  Saturation.setNumberFormat(G4P.INTEGER, 0);
-  Saturation.setOpaque(false);
-  Saturation.addEventHandler(this, "Change_Saturation");
-  brushSize_label = new GLabel(toolbarWindow, 50, 150, 80, 20);
-  brushSize_label.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
-  brushSize_label.setText("Brush Size");
-  brushSize_label.setOpaque(false);
   brightness_label = new GLabel(toolbarWindow, 25, 225, 80, 20);
   brightness_label.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   brightness_label.setText("Brightness");
@@ -264,11 +272,19 @@ public void createGUI(){
   hue_label.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   hue_label.setText("Hue");
   hue_label.setOpaque(false);
-  saturation_label = new GLabel(toolbarWindow, 275, 225, 80, 20);
-  saturation_label.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
-  saturation_label.setText("Saturation");
-  saturation_label.setOpaque(false);
-  // reset/download
+
+  // BROKEN FEATURE (SATURATION)
+  // Saturation = new GSlider(toolbarWindow, 275, 200, 100, 40, 10.0);
+  // Saturation.setLimits(1.0, 0.9, 1.1);
+  // Saturation.setNumberFormat(G4P.INTEGER, 0);
+  // Saturation.setOpaque(false);
+  // Saturation.addEventHandler(this, "Change_Saturation");
+  // saturation_label = new GLabel(toolbarWindow, 275, 225, 80, 20);
+  // saturation_label.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  // saturation_label.setText("Saturation");
+  // saturation_label.setOpaque(false);
+  
+  // reset/download row
   reset_btn = new GButton(toolbarWindow, 25, 275, 80, 30);
   reset_btn.setText("Reset");
   reset_btn.addEventHandler(this, "Reset_image");
@@ -297,6 +313,7 @@ public void createGUI(){
   imgur_btn.addEventHandler(this, "Click_link");
   imgur_btn.setVisible(false);
 
+  // loop windows
   toolbarWindow.loop();
   imgurWindow.loop();
 }
@@ -310,24 +327,26 @@ GWindow homePage;
 // home page gui
 GButton cameraSelect; 
 GButton fileSelect; 
-GLabel label; 
 
 // pixelmatic gui
 GButton Cap;
+GButton Retake;
 GSlider Red; 
 GSlider Green; 
 GSlider Blue; 
 GSlider Brush_Size; 
 GSlider Bright; 
 GKnob Hue; 
-GSlider Saturation;
 GLabel red_label; 
 GLabel green_label; 
 GLabel blue_label; 
 GLabel brushSize_label; 
 GLabel brightness_label; 
 GLabel hue_label; 
-GLabel saturation_label;
+// BROKEN FEATURE (SATURATION)
+// GLabel saturation_label;
+// GSlider Saturation;
+
 GDropList mouse_dropdown; 
 GButton crop_btn;
 GButton reset_btn; 

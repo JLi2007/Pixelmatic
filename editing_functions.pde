@@ -27,7 +27,7 @@ void changeBrightness(int bright) {
             g = constrain(g, 0, 255);
             b = constrain(b, 0, 255);
             
-            Pix[x][y].colour = color(r,g,b);
+            imagePix[x][y].colour = color(r,g,b);
         } 
     }
     
@@ -42,42 +42,42 @@ void changeHue(int degrees) {
         for (int x = 0; x < width; x++) {
             // Get the R,G,B values from image
             float r,g,b;
-            r = red(Pix[x][y].colour);
-            g = green(Pix[x][y].colour);
-            b = blue(Pix[x][y].colour);
+            r = red(imagePix[x][y].colour);
+            g = green(imagePix[x][y].colour);
+            b = blue(imagePix[x][y].colour);
             
             int[] rgb = hueWheel.applyFilter(r,g,b);
-            Pix[x][y].colour = color(rgb[0],rgb[1],rgb[2]);
+            imagePix[x][y].colour = color(rgb[0],rgb[1],rgb[2]);
         } 
     }
     
     updatePixels();
 }
 
-void changeSaturation(float strength) {
-    loadPixels();
-    satWheel.setSaturationRotation(strength);
+// BROKEN FEATURE (SATURATION)
+// void changeSaturation(float strength) {
+//     loadPixels();
+//     satWheel.setSaturationRotation(strength);
     
-    for (int y = 0; y < height; y++) { 
-        for (int x = 0; x < width; x++) {
-            // Get the R,G,B values from image
-            float r,g,b;
+//     for (int y = 0; y < height; y++) { 
+//         for (int x = 0; x < width; x++) {
+//             // Get the R,G,B values from image
+//             float r,g,b;
             
-            r = red(Pix[x][y].colour);
-            g = green(Pix[x][y].colour);
-            b = blue(Pix[x][y].colour);
+//             r = red(imagePix.colour);
+//             g = green(imagePix.colour);
+//             b = blue(imagePix.colour);
             
-            int[] rgb = satWheel.applyFilter(r,g,b);
-            Pix[x][y].colour = color(rgb[0],rgb[1],rgb[2]);
-        } 
-    }
-    updatePixels();
-}
+//             int[] rgb = satWheel.applyFilter(r,g,b);
+//             imagePix.colour = color(rgb[0],rgb[1],rgb[2]);
+//         } 
+//     }
+//     updatePixels();
+// }
 
 void resetToOriginal() {
     changeBrightness(0);
     hueWheel.setHueRotation(0.0);
-    satWheel.setSaturationRotation(0.9);
     
     loadPixels();
     surface.setSize(800,800);
@@ -91,8 +91,8 @@ void resetToOriginal() {
 void checkIfInBox(PVector x, PVector y) {
     for (int i = 0; i < width; i++) {
         for (int j = 0; j < height; j++) {
-            if (x.y < Pix[i][j].pos.y && y.y > Pix[i][j].pos.y && x.x < Pix[i][j].pos.x && y.x > Pix[i][j].pos.x) {
-                Pix[i][j].colour = color(red(Pix[i][j].colour) / 2, green(Pix[i][j].colour) / 2, blue(Pix[i][j].colour) / 2);
+            if (x.y < imagePix[i][j].pos.y && y.y > imagePix[i][j].pos.y && x.x < imagePix[i][j].pos.x && y.x > imagePix[i][j].pos.x) {
+                imagePix[i][j].colour = color(red(imagePix[i][j].colour) / 2, green(imagePix[i][j].colour) / 2, blue(imagePix[i][j].colour) / 2);
             } 
         }
     }

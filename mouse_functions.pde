@@ -13,11 +13,11 @@ void mouseDragged() {
       
       for (int y = startY; y < endY; y++) {
           for (int x = startX; x < endX; x++) {   
-              float dist = Pix[x][y].pos.dist(mousePos);  
+              float dist = imagePix[x][y].pos.dist(mousePos);  
               if (dist <= brushSize) {
                   paint = color(r, g, b);
                   pixels[y * width + x] = paint;
-                  Pix[x][y].colour = paint;
+                  imagePix[x][y].colour = paint;
                   originalPix[x][y].colour = paint; 
               }  
           }
