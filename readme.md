@@ -1,6 +1,9 @@
 # Welcome to Piximatic
 
-a Computer Science Group Project
+![Logo](https://i.postimg.cc/VLz4MhJF/Piximatic.png)
+
+
+ICS4UI Software Engineering Team Project
 
 ## Features
 
@@ -15,7 +18,7 @@ a Computer Science Group Project
   - Adjust Hue
 
 - Download/Saving
-- File Share
+- File Share with Imgur API
 
 ## Authors
 
