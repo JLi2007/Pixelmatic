@@ -45,6 +45,13 @@ void fileSelected(File selection) {
     // if no file was selected, close the window
     if (selection == null) {
         println("Window was closed or the user hit cancel.");
+        
+        // recreate the home screen and reset variables
+        createGUI_Home();
+        showCameraPage = false;
+        showFilePage = false;
+        toolbarWindow.setVisible(false);
+        imgurWindow.setVisible(false);
     }   
 
     // a file was selected:
@@ -65,11 +72,12 @@ void draw() {
 
     // Create toolbar GUI and the file select popup when the "file" button is clicked on the home page
     if(showFilePage){
-        createGUI();
         showFilePage = false;
         
         // call the selectInput function to bring up the file selection window
         selectInput("Select a file to process:", "fileSelected");
+        
+        createGUI();
     }
 
     // Create toolbar GUI and open the webcam when "camera" button is clicked on the home page
