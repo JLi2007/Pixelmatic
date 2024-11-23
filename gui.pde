@@ -38,7 +38,7 @@ synchronized public void win_draw2(PApplet appc, GWinData data) { //_CODE_:windo
 
 synchronized public void win_drawHome(PApplet appc, GWinData data) { //_CODE_:homePage:261049:
   appc.background(230);
-  appc.image(pixelmaticLogo,0,0);
+  appc.image(piximaticLogo,0,0);
 } //_CODE_:homePage:261049:
 
 public void Camera_select(GButton source, GEvent event) { //_CODE_:cameraSelect:424562:
@@ -163,8 +163,8 @@ public void createGUI(){
   G4P.setGlobalColorScheme(GCScheme.BLUE_SCHEME);
   G4P.setMouseOverEnabled(false);
 
-  surface.setTitle("Pixelmatic");
-  toolbarWindow = GWindow.getWindow(this, "Pixelmatic Toolbar", 0, 0, 400, 400, JAVA2D);
+  surface.setTitle("Piximatic");
+  toolbarWindow = GWindow.getWindow(this, "Piximatic Toolbar", 0, 0, 400, 400, JAVA2D);
   toolbarWindow.noLoop();
   toolbarWindow.setActionOnClose(G4P.KEEP_OPEN);
   toolbarWindow.addDrawHandler(this, "win_draw1");
@@ -328,7 +328,7 @@ GWindow homePage;
 GButton cameraSelect; 
 GButton fileSelect; 
 
-// pixelmatic gui
+// piximatic gui
 GButton Cap;
 GButton Retake;
 GSlider Red; 
