@@ -288,6 +288,7 @@ public void createGUI(){
   reset_btn = new GButton(toolbarWindow, 25, 275, 80, 30);
   reset_btn.setText("Reset");
   reset_btn.addEventHandler(this, "Reset_image");
+  reset_btn.setLocalColorScheme(GCScheme.GREEN_SCHEME);
   download_btn = new GButton(toolbarWindow, 150, 275, 80, 30);
   download_btn.setText("Download");
   download_btn.addEventHandler(this, "Download_image");

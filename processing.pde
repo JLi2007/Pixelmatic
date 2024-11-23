@@ -152,7 +152,7 @@ void draw() {
 
             // scale down the image proportionally if it's larger than the bounds of the screen with two cases
             if(img.width>displayWidth){
-                img.resize(int(img.width * float(displayWidth)/float(img.width)), int(img.height * float(displayWidth)/float(img.width)));
+                img.resize(int(img.width * float(displayWidth/2)/float(img.width)), int(img.height * float(displayWidth/2)/float(img.width)));
             }
             if(img.height>displayHeight){
                 img.resize(int(img.width * float(displayHeight)/float(img.height)), int(img.height * float(displayHeight)/float(img.height)));
